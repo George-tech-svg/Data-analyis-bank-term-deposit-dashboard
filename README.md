@@ -234,6 +234,7 @@ text
 I work with data. I clean it, analyze it, and turn it into dashboards that help businesses make better decisions.
 
 I have completed certificates in:
+-Data Science (13 months)
 - Data Analytics (3 months)
 - Python Programming (2.5 months)
 - Machine Learning (4 months)
