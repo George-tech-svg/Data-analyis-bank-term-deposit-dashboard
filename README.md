@@ -3,7 +3,9 @@
 ## Live Dashboard Preview
 
 ![Executive Dashboard](executive_dashboard.png)
+
 ![Customer Segmentation](customer_segmentation.png)
+
 ![Campaign Optimization](campaign_optimization.png.png)
 
 ---
