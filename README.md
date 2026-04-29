@@ -3,9 +3,9 @@
 
 ## Dashboard Preview
 
-![Executive Dashboard](screenshots/executive_dashboard.png)
-![Customer Segmentation](screenshots/customer_segmentation.png)
-![Campaign Optimization](screenshots/campaign_optimization.png)
+![Executive Dashboard](screenshots/executive_dashboard)
+![Customer Segmentation](screenshots/customer_segmentation)
+![Campaign Optimization](screenshots/campaign_optimization)
 
 
 ## Overview
