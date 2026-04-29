@@ -3,10 +3,9 @@
 
 ## Dashboard Preview
 
-![Executive Dashboard](bank-term-deposit-dashboard (1)\bank-term-deposit-dashboard\screenshots\executive_dashboard)
-![Customer Segmentation](bank-term-deposit-dashboard (1)\bank-term-deposit-dashboard\screenshots\<img width="779" height="486" alt="customer_segmentation" src="https://github.com/user-attachments/assets/e3d29d87-44c8-4b4a-886e-525e369f9f30" />
-)
-![Campaign Optimization](bank-term-deposit-dashboard (1)\bank-term-deposit-dashboard\screenshots\campaign_optimization.png)
+![Executive Dashboard](screenshots\executive_dashboard)
+![Customer Segmentation](screenshots\customer_segmentation)
+![Campaign Optimization](screenshots\campaign_optimization.png)
 
 ## Overview
 This project is a Power BI dashboard designed to help a bank improve its telemarketing campaigns for term deposit subscriptions.
