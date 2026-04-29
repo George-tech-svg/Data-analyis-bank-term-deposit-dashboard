@@ -2,9 +2,9 @@
 
 ## Live Dashboard Preview
 
-![Executive Dashboard](screenshots/executive_dashboard.png)
-![Customer Segmentation](screenshots/customer_segmentation.png)
-![Campaign Optimization](screenshots/campaign_optimization.png)
+![Executive Dashboard](executive_dashboard.png)
+![Customer Segmentation](customer_segmentation.png)
+![Campaign Optimization](campaign_optimization.png.png)
 
 ---
 
