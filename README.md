@@ -173,7 +173,9 @@ Certifications completed: Data Analytics (3 months), Python Programming (2.5 mon
 Connect with me for freelance data analytics and Power BI projects.
 
 ## Connect with Me
-
+- Email:george babji1220@gmail.com
+- Phone:+254115136359
+- Whatsapp:+254111866769
 - Upwork Profile: https://upwork.com/freelancers/~01ea729f5447c9e73b
 - LinkedIn: https://www.linkedin.com/in/george-onyango-5a5906360/
 - GitHub: https://github.com/George-tech-svg/Data-analyis-bank-term-deposit-dashboard
