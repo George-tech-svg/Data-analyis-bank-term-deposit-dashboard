@@ -1,5 +1,9 @@
 # Bank Term Deposit Subscription Dashboard
 
+## Customer Targeting & Campaign Optimization Analytics (Power BI Project)
+
+---
+
 ## Live Dashboard Preview
 
 ![Executive Dashboard](executive_dashboard.png)
@@ -12,220 +16,219 @@
 
 ## What Problem Does This Dashboard Solve?
 
-A bank in Portugal runs telemarketing campaigns to sell term deposits. But they have a problem. They do not know which customers to call first. They do not know when to call. They waste money calling the wrong people.
+A bank in Portugal runs telemarketing campaigns to sell term deposits. However, the marketing team faces a major challenge:
 
-This dashboard answers three simple questions:
+They do not know:
 
-1. Which customers should the marketing team call first?
-2. How much money will the bank make from each customer segment?
-3. How can the bank call fewer people but get more subscriptions?
+- Which customers to call first  
+- When to call customers  
+- How to reduce wasted marketing costs  
+- How to improve subscription rates  
+
+This dashboard solves those problems using data analysis and business intelligence.
+
+---
+
+## Key Business Questions Answered
+
+1. Which customers should the marketing team target first?  
+2. Which customer groups generate the highest return?  
+3. How can the bank reduce campaign cost and improve efficiency?  
 
 ---
 
 ## About the Data
 
 | Item | Details |
-|------|---------|
+|------|--------|
 | Source | UCI Machine Learning Repository |
 | File name | bank-full.csv |
 | Number of rows | 45,211 customers |
-| Number of columns | 17 |
-| Time period | May 2008 to November 2010 |
-| What we are predicting | Whether a customer will subscribe (yes or no) |
+| Number of columns | 17 features |
+| Time period | May 2008 – November 2010 |
+| Target variable | Whether customer subscribed (yes/no) |
 
 ---
 
-## Tools I Used
+## Tools Used
 
-- Power BI Desktop – to build the dashboard
-- Power Query – to clean the data
-- DAX – to create calculations and measures
+- Power BI Desktop → Dashboard creation  
+- Power Query → Data cleaning and transformation  
+- DAX (Data Analysis Expressions) → Calculations and KPIs  
 
 ---
 
-## The Original Columns (Before Cleaning)
+## Original Dataset Columns
 
-These are the columns that came with the dataset:
-
-| Column Name | What It Means |
-|-------------|---------------|
-| age | Customer's age in years |
-| job | Type of job (admin, blue-collar, retired, student, etc.) |
-| marital | Married, single, or divorced |
-| education | Primary, secondary, or tertiary |
-| default | Does the customer have credit default? (yes or no) |
+| Column Name | Description |
+|-------------|-------------|
+| age | Customer age |
+| job | Type of job |
+| marital | Marital status |
+| education | Education level |
+| default | Credit default status |
 | balance | Average yearly account balance |
-| housing | Does the customer have a housing loan? (yes or no) |
-| loan | Does the customer have a personal loan? (yes or no) |
-| contact | How the customer was contacted (cellular or telephone) |
-| day | Day of the month when last contacted |
-| month | Month of the year when last contacted |
-| duration | Length of the last call in seconds |
-| campaign | Number of calls made during this campaign |
-| pdays | Days since previous campaign contact (-1 means never contacted) |
-| previous | Number of contacts before this campaign |
-| poutcome | Outcome of the previous campaign (success or failure) |
-| y | Did the customer subscribe? (yes or no) – this is our target |
+| housing | Housing loan status |
+| loan | Personal loan status |
+| contact | Contact method |
+| day | Last contact day |
+| month | Last contact month |
+| duration | Last call duration (seconds) |
+| campaign | Number of contacts in campaign |
+| pdays | Days since last contact |
+| previous | Previous campaign contacts |
+| poutcome | Previous campaign outcome |
+| y | Subscription result (target) |
 
 ---
 
-## New Columns I Created (After Cleaning)
+## New Features Created (Feature Engineering)
 
-I created these columns to get better insights:
-
-| Column Name | What It Means |
-|-------------|---------------|
-| AgeGroup | Young Adult, Early Career, Mid Career, Pre-Retirement, Retirement |
-| BalanceTier | Overdraft, Low, Medium, High, Very High |
-| PreviouslyContacted | Yes if contacted before, No if never contacted |
-| CallEfficiency | Highly Efficient, Efficient, Inefficient, or Standard |
-| SubProbability | Score from 0 to 100 showing how likely a customer is to subscribe |
-| CLVEstimate | Customer Lifetime Value estimate in dollars |
-| PriorityScore | Combined score from 0 to 100 telling who to call first |
-| MonthNumber | Number from 1 to 12 to sort months correctly (Jan=1, Dec=12) |
+| Column Name | Description |
+|-------------|-------------|
+| AgeGroup | Customer age categories |
+| BalanceTier | Low to Very High balance grouping |
+| PreviouslyContacted | Whether customer was contacted before |
+| CallEfficiency | Measures call effectiveness |
+| SubProbability | Subscription likelihood score (0–100) |
+| CLVEstimate | Customer lifetime value estimate |
+| PriorityScore | Ranking score for calling priority |
+| MonthNumber | Numeric month for sorting |
 
 ---
 
-## How I Cleaned the Data in Power Query
+## Data Cleaning Process (Power Query)
 
-1. Changed "unknown" values to empty (null) so they do not affect calculations
-2. Created AgeGroup column to group customers by age brackets
-3. Created BalanceTier column to group customers by how much money they have
-4. Created PreviouslyContacted column to know if a customer was contacted before
-5. Created CallEfficiency column to measure how effective each call was
-6. Removed customers younger than 18 and older than 95 (outliers)
-7. Removed calls longer than 5000 seconds (too long to be realistic)
-8. Created MonthNumber column to sort months from January to December
+- Replaced "unknown" values with null  
+- Created AgeGroup for segmentation  
+- Created BalanceTier for financial grouping  
+- Created PreviouslyContacted flag  
+- Removed extreme age outliers (<18 or >95)  
+- Removed unrealistic call durations (>5000 seconds)  
+- Standardized month ordering using MonthNumber  
 
 ---
 
-## Key Calculations (DAX Measures)
+## Key DAX Measures
 
-**Total Customers**
-Total Customers = COUNTROWS('bank-full')
+```dax
+Total Customers =
+COUNTROWS('bank-full')
 
-text
+Total Subscribed =
+CALCULATE(COUNTROWS('bank-full'), 'bank-full'[y] = "yes")
 
-**Total Subscribed**
-Total Subscribed = CALCULATE(COUNTROWS('bank-full'), 'bank-full'[y] = "yes")
+Subscription Rate % =
+DIVIDE([Total Subscribed], [Total Customers]) * 100
 
-text
+Average Balance =
+AVERAGE('bank-full'[balance])
 
-**Subscription Rate Percentage**
-Subscription Rate % = DIVIDE([Total Subscribed], [Total Customers]) * 100
+Average Call Duration =
+AVERAGE('bank-full'[duration])
 
-text
+Campaign Cost =
+[Total Customers] * 0.50
 
-**Average Balance**
-Average Balance = AVERAGE('bank-full'[balance])
+Revenue Per Subscriber =
+AVERAGEX(
+    FILTER('bank-full', 'bank-full'[y] = "yes"),
+    'bank-full'[balance]
+) * 0.02
 
-text
+Total Revenue =
+[Total Subscribed] * [Revenue Per Subscriber]
 
-**Average Call Duration**
-Average Call Duration = AVERAGE('bank-full'[duration])
+Campaign ROI % =
+DIVIDE([Total Revenue] - [Campaign Cost], [Campaign Cost]) * 100
 
-text
-
-**Campaign Cost (assuming $0.50 per call)**
-Campaign Cost = [Total Customers] * 0.50
-
-text
-
-**Revenue Per Subscriber**
-Revenue Per Subscriber = AVERAGEX(FILTER('bank-full', 'bank-full'[y] = "yes"), 'bank-full'[balance]) * 0.02
-
-text
-
-**Total Revenue**
-Total Revenue = [Total Subscribed] * [Revenue Per Subscriber]
-
-text
-
-**Campaign ROI Percentage**
-Campaign ROI % = DIVIDE([Total Revenue] - [Campaign Cost], [Campaign Cost]) * 100
-
-text
-
-**Call Efficiency Ratio**
 Call Efficiency Ratio =
 DIVIDE(
-CALCULATE([Total Subscribed], 'bank-full'[duration] <= 200),
-CALCULATE([Total Customers], 'bank-full'[duration] <= 200),
-0
+    CALCULATE([Total Subscribed], 'bank-full'[duration] <= 200),
+    CALCULATE([Total Customers], 'bank-full'[duration] <= 200),
+    0
 ) * 100
-
-text
+```
 
 ---
 
-## What You Will Find on Each Dashboard Page
+## Dashboard Pages Overview
+
+---
 
 ### Page 1: Executive Dashboard
-- Key numbers: Success Rate, Campaign Cost, ROI, Average Balance
-- Filters to slice by job, age group, and month
-- Chart showing subscription rate by job type
-- Chart showing monthly subscription trends
-- Chart showing subscriptions by age group
-- Chart showing balance distribution for subscribers vs non-subscribers
-- Table showing top 10 customer segments
 
-### Page 2: Customer Segmentation
-- Average priority score by job
-- Average customer lifetime value by job
-- Average subscription probability by education level
-- Heat map showing subscription rates by age group and job
-
-### Page 3: Campaign Optimization
-- Call efficiency distribution by job
-- Monthly subscription rate compared to monthly ROI
-- Subscription rate by previous campaign outcome
+- Key KPIs: Subscription rate, ROI, cost, revenue  
+- Filters by job, age group, and month  
+- Subscription rate by job type  
+- Monthly campaign performance trends  
+- Age group performance analysis  
+- Balance distribution comparison  
+- Top customer segment table  
 
 ---
 
-## What I Learned From This Data
+### Page 2: Customer Segmentation
 
-| Finding | What The Bank Should Do |
-|---------|------------------------|
-| Retired customers have the highest subscription rate (28-32%) | Call retired customers first |
-| May and June have 18% success rate, December only 8% | Run more campaigns in late spring |
-| Customers with successful past campaigns are 3x more likely to subscribe again | Focus on past successful customers |
-| Customers with higher balances subscribe more | Offer premium products to rich customers |
-| Calls between 200 and 500 seconds work best | Train callers to keep conversations in this range |
+- Priority score by job  
+- Customer lifetime value by job  
+- Subscription probability by education  
+- Heatmap of age vs job performance  
+
+---
+
+### Page 3: Campaign Optimization
+
+- Call efficiency by job type  
+- Monthly ROI vs subscription rate  
+- Impact of previous campaign success  
+
+---
+
+## Key Business Insights
+
+| Finding | Business Action |
+|---------|----------------|
+| Retired customers have highest subscription rate (28–32%) | Prioritize retired customers |
+| May and June perform poorly (~18%) | Reduce campaign activity in these months |
+| Previous successful customers are 3x more likely to convert | Retarget past successful customers |
+| Higher balance customers convert more | Focus on premium customers |
+| Optimal call duration is 200–500 seconds | Train agents for optimal call length |
 
 ---
 
 ## Files in This Repository
 
-| File | What It Is |
+| File | Description |
 |------|-------------|
-| bank_term_deposit_dashboard.pbix | The Power BI file (open with Power BI Desktop) |
-| bank_term_deposit_dashboard.pdf | PDF version for people without Power BI |
-| screenshots/ | Pictures of all three dashboard pages |
-| power_query/cleaning_steps.txt | All the Power Query M code I wrote |
-| dax_measures/measures.txt | All the DAX formulas I created |
-| data/bank-full.csv | The original dataset (first 100 rows only) |
+| bank_term_deposit_dashboard.pbix | Power BI dashboard file |
+| bank_term_deposit_dashboard.pdf | Exported dashboard report |
+| screenshots/ | Dashboard page images |
+| power_query/cleaning_steps.txt | Data cleaning steps |
+| dax_measures/measures.txt | All DAX calculations |
+| data/bank-full.csv | Original dataset |
 
 ---
 
 ## How to Use This Dashboard
 
-1. Download the file called `bank_term_deposit_dashboard.pbix`
-2. Open it with Power BI Desktop (it is free)
-3. Use the buttons on the left to filter by job, age group, or month
-4. Hover your mouse over any chart to see more details
-5. Click the tabs at the bottom to switch between the three pages
+1. Download `bank_term_deposit_dashboard.pbix`  
+2. Open using Power BI Desktop (free)  
+3. Use filters (job, age, month) to explore insights  
+4. Hover on visuals for detailed breakdowns  
+5. Switch pages using navigation buttons  
 
 ---
 
-## My Certificates
+## My Certifications
 
-| Certificate | Link |
-|-------------|------|
-| Data Analytics | [View Certificate](https://savanna.alxafrica.com/certificates/T95s3SPMxZ) |
-| Data Science | [View Certificate](https://savanna.alxafrica.com/certificates/flJSZ2Xs6r) |
-| Professional Foundations | [View Certificate](https://savanna.alxafrica.com/certificates/RYz9rB28SJ) |
-| Python Programming | [View Certificate](https://savanna.alxafrica.com/certificates/Ee8x6JfGCh) |
-| Machine Learning | [View Certificate](https://savanna.alxafrica.com/certificates/7zsMrEN5m2) |
+| Certification | Link |
+|--------------|------|
+| Data Analytics | https://savanna.alxafrica.com/certificates/T95s3SPMxZ |
+| Data Science | https://savanna.alxafrica.com/certificates/flJSZ2Xs6r |
+| Professional Foundations | https://savanna.alxafrica.com/certificates/RYz9rB28SJ |
+| Python Programming | https://savanna.alxafrica.com/certificates/Ee8x6JfGCh |
+| Machine Learning | https://savanna.alxafrica.com/certificates/7zsMrEN5m2 |
 
 ---
 
@@ -233,26 +236,45 @@ text
 
 **George Onyango Ochieng**
 
-I work with data. I clean it, analyze it, and turn it into dashboards that help businesses make better decisions.
+I am a data analyst focused on turning raw data into business decisions.
 
-I have completed certificates in:
--Data Science (13 months)
-- Data Analytics (3 months)
-- Python Programming (2.5 months)
-- Machine Learning (4 months)
-- Professional Foundation (3 months)
+### Skills:
+- Power BI Dashboard Development  
+- Data Cleaning with Power Query  
+- DAX Calculations  
+- Python for Data Analysis  
+- Machine Learning Basics  
 
-I build dashboards using Power BI, Python, and machine learning. I focus on fintech, fraud detection, and customer analytics.
+### Interests:
+- Fintech analytics  
+- Customer behavior analysis  
+- Fraud detection systems  
+- Business intelligence dashboards  
 
-I am looking for freelance data analytics and Power BI work.
+I am currently seeking freelance and remote data analytics opportunities.
 
 ---
 
-## Contact Me
+## Contact Information
 
-- **Call or Text:** +254115136359
-- **WhatsApp:** +254111866769
-- **Email:** georgebabji1220@gmail.com
-- **Upwork:** https://upwork.com/freelancers/~01ea729f5447c9e73b
-- **LinkedIn:** https://www.linkedin.com/in/george-onyango-5a5906360/
-- **GitHub:** https://github.com/George-tech-svg/Data-analyis-bank-term-deposit-dashboard
+- Phone: +254 115 136 359  
+- WhatsApp: https://wa.me/254111866769  
+- Email: georgebabji1220@gmail.com  
+- GitHub: https://github.com/George-tech-svg/Data-analyis-bank-term-deposit-dashboard  
+- LinkedIn: https://www.linkedin.com/in/george-onyango-5a5906360/  
+
+---
+
+## Final Note
+
+This project demonstrates:
+
+- Real-world business problem solving  
+- Data cleaning and transformation  
+- Dashboard design and storytelling  
+- Customer segmentation analysis  
+- Marketing optimization using data  
+
+**Goal:** Help businesses make smarter, data-driven marketing decisions.
+
+---
